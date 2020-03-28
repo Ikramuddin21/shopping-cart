@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div id="firstArea" class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div id="mobile" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="minusBtn"class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numberOfMobile" type="text" class="form-control text-center" value="1">
+                           <button id="plusBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="priceOfMobile">1219</span></h5>
+                        <img id="remove" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div id="case" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="minusBtn2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numberOfCase" type="text" class="form-control text-center" value="1">
+                           <button id="plusBtn2" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="priceOfCase">59</span></h5>
+                        <img id="remove2" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="subtotal">1278</span></h5>
+                        <h5>$<span id="addedTax">0</span></h5>
+                        <h5>$<span id="total">1278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button id="checkBtn" type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   
+   <div class="row">
+      <div class="col-md-12">
+         <div id="lastArea" class="nextPage">
+            <h2>Thank you so much for visiting our shop.</h2>
+         </div>
+      </div>
+
+   </div>
+
+   <script>
+      // plus button & change mobile price
+
+      const plusBtn = document.getElementById("plusBtn");
+      plusBtn.addEventListener("click", function(){
+        
+         const newNumber = selectPlus("numberOfMobile");
+         document.getElementById("numberOfMobile").value = newNumber;
+
+         mobilePrice("priceOfMobile", newNumber);
+         mobileSubtotalPlus("subtotal");
+         mobileSubtotalPlus("total");
+      })
+      //minus button & change mobile price
+
+      const minusBtn = document.getElementById("minusBtn");
+      minusBtn.addEventListener("click", function(){
+         
+         const newNumber = selectMinus("numberOfMobile");
+
+         if(newNumber >= 0){
+            document.getElementById("numberOfMobile").value = newNumber;
+            mobilePrice("priceOfMobile", newNumber);
+            mobileSubtotalMinus("subtotal");
+            mobileSubtotalMinus("total");
+         }
+      })
+      //plus button & change case price
+
+      const plusBtn2 = document.getElementById("plusBtn2");
+      plusBtn2.addEventListener("click", function(){
+
+         const newNumber = selectPlus("numberOfCase");
+         document.getElementById("numberOfCase").value = newNumber;
+
+         casePrice("priceOfCase", newNumber);
+         caseSubtotalPlus("subtotal");
+         caseSubtotalPlus("total");
+      })
+      //minus button & change case price
+
+      const minusBtn2 = document.getElementById("minusBtn2");
+      minusBtn2.addEventListener("click", function(){
+         
+         const newNumber = selectMinus("numberOfCase");
+
+         if(newNumber >= 0){
+            document.getElementById("numberOfCase").value = newNumber;
+            casePrice("priceOfCase", newNumber);
+            caseSubtotalMinus("subtotal");
+            caseSubtotalMinus("total");         
+            }
+      })
+
+      // plus button event handler
+
+      function selectPlus(id){
+         const number = document.getElementById(id).value;
+         const realNumber = parseFloat(number);
+         const number2 = realNumber + 1;
+         return number2;
+      }
+      // minus button event handler
+
+      function selectMinus(id){
+         const number = document.getElementById(id).value;
+         const realNumber = parseFloat(number);
+         const number2 = realNumber - 1;
+         return number2;
+      }
+      //mobile of price
+
+      function mobilePrice(id, newNumber){
+         const price = 1219 * newNumber;
+         document.getElementById("priceOfMobile").innerText = price;
+      }
+      //case of price
+      
+      function casePrice(id, newNumber){
+         const price = 59 * newNumber;
+         document.getElementById("priceOfCase").innerText = price;
+      }
+      // subtotal & total mobile price(plus)
+
+      function mobileSubtotalPlus(id){
+         const subtotal = document.getElementById(id).innerText;
+         const realNumber2 = parseFloat(subtotal);
+         const subtotalAmount = 1219 + realNumber2;
+         document.getElementById(id).innerText = subtotalAmount;
+         return subtotalAmount;
+      }
+       // subtotal & total mobile price(minus)
+
+       function mobileSubtotalMinus(id){
+         const subtotal = document.getElementById(id).innerText;
+         const realNumber2 = parseFloat(subtotal);
+         const subtotalAmount =realNumber2 - 1219;
+         document.getElementById(id).innerText = subtotalAmount;
+         return subtotalAmount;
+      }
+      // subtotal & total case price(plus)
+
+      function caseSubtotalPlus(id){
+         const subtotal = document.getElementById(id).innerText;
+         const realNumber2 = parseFloat(subtotal);
+
+         const subtotalAmount = 59 + realNumber2;
+         document.getElementById(id).innerText = subtotalAmount;
+         return subtotalAmount;
+      }
+      //subtotal & total case price(minus)
+
+      function caseSubtotalMinus(id){
+         const subtotal = document.getElementById(id).innerText;
+         const realNumber2 = parseFloat(subtotal);
+
+         const subtotalAmount = realNumber2 - 59;
+         document.getElementById(id).innerText = subtotalAmount;
+         return subtotalAmount;
+      }
+      // check out button handler
+
+      const checkBtn = document.getElementById("checkBtn");
+      checkBtn.addEventListener("click", function(){
+         document.getElementById("firstArea").style.display = "none";
+
+         document.getElementById("lastArea").style.display = "block";
+
+      })
+      // remove mobile item click handler
+
+      const remove = document.getElementById("remove");
+      remove.addEventListener("click", function(){
+         document.getElementById("mobile").style.display = "none";
+      })
+      // remove case item click handler
+
+      const remove2 = document.getElementById("remove2");
+      remove2.addEventListener("click", function(){
+         document.getElementById("case").style.display = "none";
+      })
+
+
+   </script>
+</body>
+
+</html>
